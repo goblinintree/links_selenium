@@ -2,7 +2,7 @@
 import xlrd
 import json
 
-def xls_url_generator(xls_file=u'file\中文版链接-用例.xls', workbook=None, ignores=[u"temp",u"正式版-账号",u"流程业务"]):
+def xls_url_generator(xls_file=u'file\\cases\\case01.xls', workbook=None, ignores=[u"temp",u"正式版-账号",u"流程业务"]):
     """
     {   
         "moudle":sheet.name,
@@ -35,7 +35,7 @@ def xls_url_generator(xls_file=u'file\中文版链接-用例.xls', workbook=None
     pass
 
 
-def xls_yewu_generator(xls_file=u'file\中文版链接-用例.xls', workbook=None, sures=[u"流程业务"]):
+def xls_yewu_generator(xls_file=u'file\\cases\\case01.xls', workbook=None, sures=[u"流程业务"]):
     """
     {   
         "moudle":sheet.name,
@@ -44,8 +44,10 @@ def xls_yewu_generator(xls_file=u'file\中文版链接-用例.xls', workbook=Non
         "member",sheet.cell(srow,3).value
     }
     """
-    if workbook:
+    if not workbook:
         workbook = xlrd.open_workbook(xls_file, encoding_override='GB2312')  
+        print xls_file
+    print 1111
     sheets = workbook.sheets()
     for sheet in  sheets:
         srows = sheet.nrows
@@ -60,6 +62,7 @@ def xls_yewu_generator(xls_file=u'file\中文版链接-用例.xls', workbook=Non
                         scol_3_value = int(scol_3_value)
                     except (IndexError, ValueError):
                         scol_3_value = 0
+                    # print  {"moudle":sheet.name,"name":sheet.cell(srow,1).value, "yewu":sheet.cell(srow,2).value, "member":scol_3_value}
                     yield  {"moudle":sheet.name,"name":sheet.cell(srow,1).value, "yewu":sheet.cell(srow,2).value, "member":scol_3_value}
     pass
 
@@ -80,13 +83,13 @@ def be_sure(sheet, sures):
     return False
 
 
-def get_workbook(xls_file=u'file\中文版链接-用例.xls'):
-    # print xls_file
+def get_workbook(xls_file):
+    print xls_file
     workbook = xlrd.open_workbook(xls_file, encoding_override='GB2312')  
     return workbook
 
 
-def xls_member_dict(xls_file=u'file\中文版链接-用例.xls',workbook=None, sure=u"正式版-账号", member=30):
+def xls_member_dict(xls_file=u'file\\cases\\case01.xls',workbook=None, sure=u"正式版-账号", member=30):
     """
     {   
         "member":"30",
@@ -130,7 +133,7 @@ def xls_member_dict(xls_file=u'file\中文版链接-用例.xls',workbook=None, s
 if __name__ == "__main__":
     #打开Excel文件  
     print "sss"
-    xls_file = u'file\中文版链接-用例.xls'
+    xls_file = u'file\cases\case01.xls'
     count = 0
     for string in xls_url_generator(xls_file):
         count = count + 1
