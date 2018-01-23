@@ -1,0 +1,8 @@
+
+pip install selenium  #(pip install -U selenium)
+
+
+pip install xlutils ## xlwt && xlrd
+    pip install xlwt  # write
+    pip install xlrd  # read
+
